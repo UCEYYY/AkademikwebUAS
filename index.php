@@ -1,103 +1,48 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Akademik</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        header {
-            background-color:rgb(28, 118, 207);
-            color: white;
-            padding: 20px 10px;
-            text-align: center;
-        }
-        header h1 {
-            margin: 0;
-        }
-        main {
-            padding: 20px;
-            text-align: center;
-        }
-        main h2 {
-            color:rgb(18, 106, 194); 
-        }
-        main p {
-            font-size: 1.1em;
-            margin-bottom: 20px;
-        }
-        table {
-            margin: 0 auto;
-            border-collapse: collapse;
-            width: 30%;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 15px;
-            text-align: center;
-        }
-        th {
-            background-color:rgb(27, 109, 192); 
-            color: white;
-        }
-        td a {
-            display: block;
-            text-decoration: none;
-            color:rgb(15, 95, 174);
-            font-weight: bold;
-            padding: 10px 15px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        td a:hover {
-            background-color:rgb(45, 113, 214); 
-            color: white;
-        }
-        footer {
-            background-color:rgb(26, 109, 193); 
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Dashboard Akademik</h1>
-    </header>
+<?php
+include "layout/header.php";
+include "config/koneksi.php";
 
-    <main>
-        <h2>Selamat Datang di Dashboard Akademik</h2>
-        <p>Pilih menu di bawah untuk mengelola data akademik:</p>
+$queryMahasiswa = "SELECT COUNT(*) as total FROM mahasiswa";
+$resultMahasiswa = mysqli_query($conn, $queryMahasiswa);
+$dataMahasiswa = mysqli_fetch_assoc($resultMahasiswa);
 
-        <table>
-            <tr>
-                <th>Menu</th>
-            </tr>
-            <tr>
-                <td><a href="mahasiswa.php">Data Mahasiswa</a></td>
-            </tr>
-            <tr>
-                <td><a href="dosen.php">Data Dosen</a></td>
-            </tr>
-            <tr>
-                <td><a href="matakuliah.php">Data Mata Kuliah</a></td>
-            </tr>
-            <tr>
-                <td><a href="perkuliahan.php">Data Perkuliahan</a></td>
-            </tr>
-        </table>
-    </main>
+$queryDosen = "SELECT COUNT(*) as total FROM dosen";
+$resultDosen = mysqli_query($conn, $queryDosen);
+$dataDosen = mysqli_fetch_assoc($resultDosen);
 
-    <footer>
-        &copy; 2025 Sistem Akademik. All Rights Reserved.
-    </footer>
-</body>
-</html>
+$queryMatakuliah = "SELECT COUNT(*) as total FROM matakuliah";
+$resultMatakuliah = mysqli_query($conn, $queryMatakuliah);
+$dataMatakuliah = mysqli_fetch_assoc($resultMatakuliah);
+
+$queryPerkuliahan = "SELECT COUNT(*) as total FROM perkuliahan";
+$resultPerkuliahan = mysqli_query($conn, $queryPerkuliahan);
+$dataPerkuliahan = mysqli_fetch_assoc($resultPerkuliahan);
+?>
+
+<h1 style="text-align: center; margin-top: 20px;">Dashboard</h1>
+<div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-top: 30px;">
+    <div style="border: 1px solid #ddd; border-radius: 8px; padding: 20px; text-align: center; width: 200px; margin: 10px;">
+        <h3>Mahasiswa</h3>
+        <p style="font-size: 24px; font-weight: bold;"><?= $dataMahasiswa['total']; ?></p>
+        <a href="mahasiswa/index.php" style="text-decoration: none; color: #007bff;">Lihat Detail</a>
+    </div>
+    <div style="border: 1px solid #ddd; border-radius: 8px; padding: 20px; text-align: center; width: 200px; margin: 10px;">
+        <h3>Dosen</h3>
+        <p style="font-size: 24px; font-weight: bold;"><?= $dataDosen['total']; ?></p>
+        <a href="dosen/index.php" style="text-decoration: none; color: #007bff;">Lihat Detail</a>
+    </div>
+    <div style="border: 1px solid #ddd; border-radius: 8px; padding: 20px; text-align: center; width: 200px; margin: 10px;">
+        <h3>Mata Kuliah</h3>
+        <p style="font-size: 24px; font-weight: bold;"><?= $dataMatakuliah['total']; ?></p>
+        <a href="matakuliah/index.php" style="text-decoration: none; color: #007bff;">Lihat Detail</a>
+    </div>
+    <div style="border: 1px solid #ddd; border-radius: 8px; padding: 20px; text-align: center; width: 200px; margin: 10px;">
+        <h3>Perkuliahan</h3>
+        <p style="font-size: 24px; font-weight: bold;"><?= $dataPerkuliahan['total']; ?></p>
+        <a href="perkuliahan/index.php" style="text-decoration: none; color: #007bff;">Lihat Detail</a>
+    </div>
+</div>
+
+<?php
+include "layout/footer.php";
+?>
